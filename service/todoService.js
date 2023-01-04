@@ -1,3 +1,19 @@
+function convertDateFormat(date) {
+  function zeroFormat(value) {
+    // if (value < 10) {
+    //   return `0${value}`;
+    // }
+    // return `${value}`;
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+  //date() value object 로 return 될때
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return `${year}-${zeroFormat(month)}-${zeroFormat(day)}`;
+}
+
 function domTodo(todoModel) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
@@ -10,9 +26,9 @@ function domTodo(todoModel) {
   tr.append(th);
   td1.textContent = todoModel.desc;
   tr.append(td1);
-  td2.textContent = todoModel.created;
+  td2.textContent = convertDateFormat(todoModel.created);
   tr.append(td2);
-  td3.textContent = todoModel.updated;
+  td3.textContent = convertDateFormat(todoModel.updated);
   tr.append(td3);
   td4.innerHTML += `<button type="button" class="btn btn-success">Edit</button>
   <button type="button" class="btn btn-danger">Delete</button>`;
