@@ -1,7 +1,7 @@
 console.log("external js");
 
 const state = {
-  todo: "",
+  todo: " ",
 };
 const ids = {
   todoInput: "todo-input",
@@ -13,6 +13,7 @@ const eventHandler = {
     e.preventDefault();
     const todo = document.getElementById(ids.todoInput);
     console.log("submit:", state.todo);
+    createTodo(state.todo);
     todo.value = "";
   },
   todoInputHandler: function (e) {
