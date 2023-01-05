@@ -14,6 +14,13 @@ function convertDateFormat(date) {
   return `${year}-${zeroFormat(month)}-${zeroFormat(day)}`;
 }
 
+function convertDateFromString(date) {
+  //<date>parameter: string 일대 slice usable
+  //server 에서 data transfer 될때는 is comes as a string
+  console.log(date);
+  return date.slice(0, 10);
+}
+
 function domTodo(todoModel) {
   const tr = document.createElement("tr");
   const th = document.createElement("th");
@@ -26,9 +33,16 @@ function domTodo(todoModel) {
   tr.append(th);
   td1.textContent = todoModel.desc;
   tr.append(td1);
-  td2.textContent = convertDateFormat(todoModel.created);
+  if (typeof todoModel.created === "string") {
+    td2.textContent = convertDateFromString(todoModel.created);
+    td3.textContent = convertDateFromString(todoModel.updated);
+  } else {
+    td2.textContent = convertDateFormat(todoModel.created);
+    td3.textContent = convertDateFormat(todoModel.created);
+  }
+
   tr.append(td2);
-  td3.textContent = convertDateFormat(todoModel.updated);
+
   tr.append(td3);
   td4.innerHTML += `<button type="button" class="btn btn-success">Edit</button>
   <button type="button" class="btn btn-danger">Delete</button>`;
@@ -46,4 +60,10 @@ function createTodo(todo) {
   const todoModel = new Todo(todo);
 
   renderTodoList([todoModel]);
+}
+async function getTodos() {
+  const res = await fetch("http://localhost:4000/todos").then((res) =>
+    res.json()
+  );
+  renderTodoList(res.todos);
 }

@@ -30,3 +30,4 @@ function registerEventHandler(id, eventType, handler) {
 // const todoInput = document.getElementById(ids.todoInput);
 registerEventHandler(ids.todoForm, "submit", eventHandler.todoSubmitHandler);
 registerEventHandler(ids.todoInput, "input", eventHandler.todoInputHandler);
+getTodos();
